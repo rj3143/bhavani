@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bhavani Koodal Yaagam</title>
+
+  <!-- Temple-style fonts and icons (free CDN) -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --saffron:#ff8a00;
+      --maroon:#8b0000;
+      --gold:#ffd966;
+      --bg:#fffaf0;
+      --text:#3a2b2b;
+      --card-bg: rgba(255,255,255,0.85);
+      --max-width:1100px;
+    }
+
+    /* subtle repeating mandala-like pattern using CSS radial gradients */
+    body{
+      margin:0;
+      font-family: "Roboto", "Segoe UI", sans-serif;
+      background-color:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      background-image:
+        radial-gradient(circle at 10% 10%, rgba(255,215,150,0.06) 0 10%, transparent 11%),
+        radial-gradient(circle at 90% 90%, rgba(255,215,150,0.06) 0 8%, transparent 9%);
+      background-repeat: repeat;
+      background-size: 450px 450px;
+      line-height:1.6;
+    }
+
+    /* top gopuram silhouette decoration */
+    .gopuram-top, .gopuram-bottom{
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width:1100px;
+      opacity: 0.06;
+      pointer-events:none;
+      z-index:0;
+    }
+    .gopuram-top { top: -10px; }
+    .gopuram-bottom { bottom: -10px; transform: translateX(-50%) rotate(180deg); }
+
+    header {
+      position:relative;
+      z-index: 10;
+      background: linear-gradient(90deg, var(--saffron), #cc0066);
+      color: #fff;
+      padding: 22px 16px;
+      text-align:center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    header .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+    }
+    header h1 {
+      margin:0;
+      font-size:20px;
+      letter-spacing:1px;
+      font-weight:700;
+    }
+    header .decor-left, header .decor-right {
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    header .decor-left img, header .decor-right img {
+      height:38px;
+      width:auto;
+      vertical-align:middle;
+    }
+    /* language toggle */
+    .lang-toggle {
+      background: var(--gold);
+      color: var(--maroon);
+      border-radius: 24px;
+      padding:6px;
+      display:inline-flex;
+      gap:6px;
+      align-items:center;
+      border: none;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .lang-toggle button{
+      background:transparent;
+      border: none;
+      font-weight:700;
+      color:var(--maroon);
+      cursor:pointer;
+      padding:6px 8px;
+      border-radius:6px;
+    }
+    .lang-toggle button.active {
+      background: var(--maroon);
+      color: #fff;
+    }
+
+    /* Sticky nav */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(139,0,0,0.97);
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      padding:8px 6px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    }
+    nav a {
+      color: #fff;
+      text-decoration:none;
+      padding:8px 14px;
+      border-radius:6px;
+      font-weight:700;
+      font-size:14px;
+    }
+    nav a:hover { background: rgba(255,255,255,0.08); }
+
+    main {
+      max-width: var(--max-width);
+      margin: 26px auto;
+      padding: 0 14px 60px;
+      position:relative;
+      z-index:5;
+    }
+
+    section.card {
+      background: var(--card-bg);
+      border-radius:12px;
+      padding:18px;
+      margin-bottom:18px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      border-left:6px solid var(--saffron);
+    }
+
+    .section-title {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin:0 0 10px;
+    }
+    .section-title h2 {
+      margin:0;
+      color:var(--maroon);
+      font-size:20px;
+    }
+    .lead {
+      margin:0 0 12px;
+      color:#3c2c2c;
+    }
+
+    .img-block { text-align:center; margin:12px 0; }
+    .img-block img { max-width:100%; border-radius:10px; display:inline-block; }
+
+    ul.service-list { padding-left:18px; margin:10px 0; }
+    ul.service-list li { margin:8px 0; }
+
+    /* two-column for wide screens */
+    .two-col { display:flex; gap:18px; flex-wrap:wrap; }
+    .col { flex:1 1 300px; min-width:260px; }
+
+    footer.page-footer {
+      background: linear-gradient(90deg, var(--maroon), #6b1b1b);
+      color:#fff;
+      padding:18px 12px;
+      text-align:center;
+      position:relative;
+      z-index:10;
+      margin-top:22px;
+    }
+
+    /* responsive */
+    @media (max-width:700px){
+      header .header-inner { flex-direction:column; gap:10px; }
+      nav { overflow:auto; white-space:nowrap; padding:10px; }
+      .two-col { flex-direction:column; }
+    }
+
+    /* small helper */
+    .muted { color: #6b4b4b; font-size:0.95rem; }
+    .badge { display:inline-block; background:var(--saffron); color:var(--maroon); padding:4px 8px; border-radius:6px; font-weight:700; margin-right:8px; }
+    .contact-card { background: rgba(255,255,255,0.95); padding:12px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.06); }
+  </style>
+</head>
+<body>
+
+  <!-- faint gopuram silhouettes (decorative) -->
+  <img class="gopuram-top" src="https://i.ibb.co/2nY7VtV/gopuram-top.png" alt="" aria-hidden="true" onerror="this.style.display='none'">
+  <img class="gopuram-bottom" src="https://i.ibb.co/2nY7VtV/gopuram-top.png" alt="" aria-hidden="true" onerror="this.style.display='none'">
+
+  <header>
+    <div class="header-inner">
+      <div class="decor-left">
+        <img src="https://cdn-icons-png.flaticon.com/512/711/711284.png" alt="Om symbol" title="Om" />
+        <div style="text-align:left">
+          <h1>Bhavani Koodal Yaagam</h1>
+          <div class="muted" style="font-size:13px">Door No. 85, Bhavani Main Road, Bhavani, Erode District</div>
+        </div>
+      </div>
+
+      <div class="decor-right">
+        <!-- language toggle -->
+        <div class="lang-toggle" aria-label="language toggle">
+          <button id="btn-en" class="active" onclick="setLanguage('en')">English</button>
+          <button id="btn-ta" onclick="setLanguage('ta')">தமிழ்</button>
+        </div>
+        <img src="https://cdn-icons-png.flaticon.com/512/711/711239.png" alt="Deepam" title="Deepam" />
+      </div>
+    </div>
+  </header>
+
+  <!-- STICKY NAV -->
+  <nav id="main-nav">
+    <a href="#home" id="nav-home">Home</a>
+    <a href="#about" id="nav-about">About Us</a>
+    <a href="#marriage" id="nav-marriage">Marriage & Star Matching</a>
+    <a href="#homams" id="nav-homams">Homams</a>
+    <a href="#poojas" id="nav-poojas">Poojas</a>
+    <a href="#prasannam" id="nav-prasannam">Prasannam</a>
+    <a href="#contact" id="nav-contact">Contact</a>
+  </nav>
+
+  <main>
+    <!-- ENGLISH CONTENT -->
+    <div id="content-en">
+
+      <!-- HOME -->
+      <section id="home" class="card">
+        <div class="section-title"><h2>Welcome to Bhavani Koodal Yaagam</h2></div>
+        <p class="lead">We perform powerful yaagams, divine poojas, and offer matrimonial services at Bhavani, Erode. Guided by Vedic tradition and experienced priests, we provide homams and remedies for families and individuals.</p>
+
+        <div class="img-block">
+          <!-- vm.jpg from user code -->
+          <img src="https://i.ibb.co/60dcJ9X0/vm.jpg" alt="Bhavani Koodal" />
+        </div>
+
+        <div class="two-col">
+          <div class="col">
+            <div class="contact-card">
+              <strong>Address:</strong> Door number 85, Bhavani Main Road, Bhavani, Erode district, Tamil Nadu<br>
+              <strong>Phone:</strong> <a href="tel:6379915340">6379915340</a><br>
+              <strong>Website:</strong> <a href="https://bhavanikoodalyaagam.in" target="_blank" rel="noopener">bhavanikoodalyaagam.in</a>
+            </div>
+          </div>
+          <div class="col muted">
+            <p><strong>Mission:</strong> Preserve Vedic tradition, assist families with star-matching and perform powerful homams to remove obstacles and invite prosperity.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT -->
+      <section id="about" class="card">
+        <div class="section-title"><h2>About Us</h2></div>
+        <p class="lead">Our center at Bhavani is dedicated to Vedic traditions, poojas, homams and community services. We follow strict rituals and maintain purity during ceremonies to bring best results for devotees.</p>
+
+        <div class="img-block"><img src="https://i.ibb.co/wZ7D9VgX/sasthi.jpg" alt="ceremony image"></div>
+      </section>
+
+      <!-- Marriage & Star Matching -->
+      <section id="marriage" class="card">
+        <div class="section-title"><h2>Marriage & Star Matching</h2></div>
+
+        <p class="lead">We provide complete matrimonial support — horoscope matching, dosha analysis, ritual guidance and marriage-related poojas for a harmonious married life.</p>
+
+        <ul class="service-list">
+          <li><strong>Horoscope & Star Matching</strong> — detailed guna matching and remedies if necessary.</li>
+          <li><strong>Dosha Analysis & Remedies</strong> — Mangal Dosha, Nadi defects and suggested pariharams.</li>
+          <li><strong>Marriage Arrangements</strong> — guidance on muhurtham, family deity worship (kuladeivam), and marriage rituals.</li>
+        </ul>
+
+        <div class="img-block">
+          <img src="https://i.ibb.co/4R7hKmtM/thirumana-thadai-neega.jpg" alt="wedding-kuladeivam">
+        </div>
+      </section>
+
+      <!-- HOMAMS -->
+      <section id="homams" class="card">
+        <div class="section-title"><h2>Homams (Fire Rituals)</h2></div>
+
+        <p class="lead">Homas (also called yagnas or fire rituals) are sacred ceremonies where offerings to the sacred fire with mantras remove negative forces and invite blessings. Listed below are the detailed homams we perform.</p>
+
+        <div class="service-list">
+          <h3 style="color:var(--maroon); margin-top:8px">Major Homams</h3>
+          <ul class="service-list">
+            <li><strong>Shashti Poorthi</strong> — Ceremony for 60th year completion, marking a transition to spiritual life.</li>
+            <li><strong>Kukuta Homa</strong> — Invoking the divine rooster of Lord Muruga — removes negativity and empowers protection.</li>
+            <li><strong>Lakshmi Kubera Homa</strong> — For financial wellbeing and abundance. <div class="img-block"><img src="https://i.ibb.co/CKdW2FFr/kubera.jpg" alt="kubera"></div></li>
+            <li><strong>Lakshmi Narayana Homa</strong> — Combined wealth & protection homa. <div class="img-block"><img src="https://i.ibb.co/gM3rZ7qf/lakshminarayana-jpg17-09-2020-1600342088.jpg" alt="lakshmi narayana"></div></li>
+            <li><strong>Muruga Homa</strong> — For courage, overcoming opponents and protection. <div class="img-block"><img src="https://i.ibb.co/G3W0JBNN/muruga.jpg" alt="muruga"></div></li>
+          </ul>
+
+          <h3 style="color:var(--maroon); margin-top:8px">Planetary (Navagraha) Homams</h3>
+          <p class="muted">We perform dedicated homams for each planet according to your horoscope requirements.</p>
+
+          <div class="two-col">
+            <div class="col">
+              <h4>Sun Homa</h4>
+              <div class="img-block"><img src="https://i.ibb.co/rBHh2TG/surya.jpg" alt="surya"></div>
+              <p>Boosts vitality, leadership, and willpower; ideal for career growth.</p>
+            </div>
+
+            <div class="col">
+              <h4>Moon Homa</h4>
+              <div class="img-block"><img src="https://i.ibb.co/chWjjCqq/chandran.jpg" alt="chandran"></div>
+              <p>Balances emotions, improves intuition, calms the mind.</p>
+            </div>
+
+            <div class="col">
+              <h4>Mars Homa</h4>
+              <div class="img-block"><img src="https://i.ibb.co/4ZJV6rKM/sevvai.jpg" alt="sevvai"></div>
+              <p>Enhances courage, clears debts and illness, raises energy.</p>
+            </div>
+
+            <div class="col">
+              <h4>Mercury Homa</h4>
+              <div class="img-block"><img src="https://i.ibb.co/pBV7WBgP/budhan1.png" alt="budhan"></div>
+              <p>Improves intellect, communication, business and education outcomes.</p>
+            </div>
+
+            <div class="col">
+              <h4>Jupiter Homa</h4>
+              <div class="img-block"><img src="https://i.ibb.co/p6Tpf3bd/guru.jpg" alt="guru"></div>
+              <p>For wisdom, prosperity, learning and spiritual growth.</p>
+            </div>
+
+            <div class="col">
+              <h4>Venus Homa</h4>
+              <div class="img-block"><img src="https://i.ibb.co/dJMGwNg8/sukran1.jpg" alt="sukra"></div>
+              <p>Enhances wealth, relationships, creativity and harmony.</p>
+            </div>
+
+            <div class="col">
+              <h4>Saturn Homa</h4>
+              <div class="img-block"><img src="https://i.ibb.co/jkwV299R/saturn.jpg" alt="saturn"></div>
+              <p>Builds patience, endurance, removes delays and karmic blockages.</p>
+            </div>
+
+            <div class="col">
+              <h4>Rahu Homa</h4>
+              <div class="img-block"><img src="https://i.ibb.co/VWKCxmH4/raghu-new.jpg" alt="rahuhoma"></div>
+              <p>Transforms adversity into opportunity; useful for career & public life.</p>
+            </div>
+
+            <div class="col">
+              <h4>Ketu Homa</h4>
+              <div class="img-block"><img src="https://i.ibb.co/tTrGQn3w/kethu.jpg" alt="kethu"></div>
+              <p>Supports spiritual growth, removes hidden obstacles and addictions.</p>
+            </div>
+          </div>
+
+          <h3 style="color:var(--maroon); margin-top:8px">Deity-based Homams</h3>
+          <ul class="service-list">
+            <li><strong>Lakshmi Homa</strong> — For wealth & abundance. <div class="img-block"><img src="https://i.ibb.co/G4jYBM5H/mahalaxmi-new.jpg" alt="mahalaxmi"></div></li>
+            <li><strong>Dhanvantri Homa</strong> — For health and healing (best on Wednesdays).</li>
+            <li><strong>Durga Homa</strong> — For protection and strength (best during Navaratri).</li>
+            <li><strong>Ganesha Homa</strong> — Removes obstacles before new ventures. <div class="img-block"><img src="https://i.ibb.co/sdsWzFrR/vinayga.jpg" alt="ganesha"></div></li>
+            <li><strong>Garbarakshambiga Homa</strong> — For fertility and safe motherhood.</li>
+            <li><strong>Hanuman Homa</strong> — Strength, courage and protection. <div class="img-block"><img src="https://i.ibb.co/VpTzgFXB/hanuman.jpg" alt="hanuman"></div></li>
+            <li><strong>Kala Bhairava Homa</strong> — Time management, punctuality and protection. <div class="img-block"><img src="https://i.ibb.co/JwMnk4PF/bairava.webp" alt="bairava"></div></li>
+            <li><strong>9 Priest Chandi Yaagam</strong> — Powerful protection and victory over negative forces.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- POOJAS -->
+      <section id="poojas" class="card">
+        <div class="section-title"><h2>Poojas & Temple Worship</h2></div>
+
+        <p class="lead">We conduct a variety of poojas and family rituals including kuladeivam worship, special deity poojas and annual family ceremonies.</p>
+
+        <ul class="service-list">
+          <li><strong>Kuladeivam Worship (Thirumana Kuladeiva Vazhipadu)</strong> — Worship of the ancestral deity before and after marriage to receive blessings.</li>
+          <li><strong>Navagraha Poojas</strong> — Pacify planetary effects, restore balance.</li>
+          <li><strong>Sudarshana Pooja</strong> — Powerful protection and health benefits.</li>
+          <li><strong>Matrimonial Poojas</strong> — Rituals to bless new unions and marriage ceremonies.</li>
+        </ul>
+      </section>
+
+      <!-- PRASANNAM -->
+      <section id="prasannam" class="card">
+        <div class="section-title"><h2>Prasannam & Remedies</h2></div>
+
+        <p class="lead">We offer prasannam and parikara poojas to address horoscope issues and life problems. Remedies are suggested after careful analysis.</p>
+
+        <ul class="service-list">
+          <li><strong>Dosha Nivarthi Poojas</strong> — Specific rituals to nullify doshas identified in the horoscope.</li>
+          <li><strong>Prasannam for Horoscope Problems</strong> — Guidance and rituals for family, health, career issues.</li>
+          <li><strong>Remedies for Family & Career</strong> — Custom homams and poojas based on client needs.</li>
+        </ul>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="card">
+        <div class="section-title"><h2>Contact & Appointments</h2></div>
+
+        <div class="two-col">
+          <div class="col">
+            <div class="contact-card">
+              <strong>Bhavani Koodal Yaagam</strong><br>
+              Door number 85, Bhavani Main Road, Bhavani, Erode district, Tamil Nadu<br>
+              Phone: <a href="tel:6379915340">6379915340</a><br>
+              Registration / Office Phone: <a href="tel:6379915340">6379915340</a><br>
+              Email: <a href="mailto:rkbhavani@bhavanikoodalyaagam.in">rkbhavani@bhavanikoodalyaagam.in</a>
+            </div>
+          </div>
+
+          <div class="col muted">
+            <p><strong>Bank / Donation:</strong><br>
+              CANARA BANK, Bhavani — GPay: 63799915340 — IFSC Code: 123456789</p>
+            <p><strong>Appointments:</strong> For bookings and muhurtham consults call the number above. Please provide birth details for horoscope-based services.</p>
+          </div>
+        </div>
+      </section>
+
+      <footer class="page-footer">
+        &copy; <span id="year-en"></span> bhavanikoodalyaagam.in | All Rights Reserved
+      </footer>
+    </div>
+
+    <!-- TAMIL CONTENT -->
+    <div id="content-ta" style="display:none">
+
+      <!-- HOME -->
+      <section id="home-ta" class="card">
+        <div class="section-title"><h2>பவானி கூடல் யாகம் - வரவேற்பு</h2></div>
+        <p class="lead">பவானி, ஈரோடு மாவட்டத்தில் யாகங்கள், பூஜைகள் மற்றும் திருமண சேவைகள் வழங்கப்படுகின்றன. வேத பாரம்பரியத்தின்படி புண்யசூத்திரங்கள் மற்றும் அனுபவமிக்க ஸ்தபதிகள் வழிகாட்டுகிறார்கள்.</p>
+
+        <div class="img-block"><img src="https://i.ibb.co/60dcJ9X0/vm.jpg" alt="Bhavani Koodal"></div>
+
+        <div class="two-col">
+          <div class="col">
+            <div class="contact-card">
+              <strong>முகவரி:</strong> எண் 85, பவானி மேன் ரோடு, பவானி, ஈரோடு மாவட்டம்<br>
+              <strong>தொடர்பு:</strong> <a href="tel:6379915340">6379915340</a><br>
+              <strong>இணையதளம்:</strong> bhavanikoodalyaagam.in
+            </div>
+          </div>
+          <div class="col muted">
+            <p
